@@ -1,9 +1,11 @@
 <template>
-  <header>
+  <header class="header">
     <v-toolbar dark color="dark" height="50px">
       <v-toolbar-side-icon></v-toolbar-side-icon>
 
-      <v-toolbar-title class="white--text">Code Blog</v-toolbar-title>
+      <v-toolbar-title class="white--text">
+        <nuxt-link to="/" class="blog-name">Code Blog</nuxt-link>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -58,4 +60,14 @@
 
   }
 </script>
+
+
+<style lang="scss" scoped>
+  header {
+    .blog-name {
+      color: #ffffff;
+      text-decoration: none;
+    }
+  }
+</style>
 

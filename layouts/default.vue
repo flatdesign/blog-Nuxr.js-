@@ -1,9 +1,13 @@
 <template>
-  <v-app dark="">
-    <Header />
-    <SideBar />
-    <nuxt />
-  </v-app>
+  <div class="default-layot">
+    <v-app dark>
+      <Header />
+      <SideBar />
+      <div class="content">
+        <nuxt />
+      </div>
+   </v-app>
+  </div>
 </template>
 
 <script>
@@ -20,9 +24,10 @@
 
 
 <style lang="scss" scoped>
-
-  div.default-wrapper {
-    padding: 10px;
+  div.default-layot {
+    .content {
+      padding: 24px;
+    }
   }
 </style>
 

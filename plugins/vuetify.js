@@ -15,7 +15,9 @@ import Vuetify, {
   VListTile,
   VListTileTitle,
   VListTileContent,
-  VNavigationDrawer
+  VNavigationDrawer,
+  VTextField,
+  VTextArea
 
 
 } from 'vuetify/lib'
@@ -47,6 +49,8 @@ Vue.use(Vuetify, {
     VListTile,
     VListTileTitle,
     VListTileContent,
-    VNavigationDrawer
+    VNavigationDrawer,
+    VTextField,
+    VTextArea
   }
 })
