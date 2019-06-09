@@ -1,20 +1,12 @@
 <template>
   <ul class="posts-list">
-    <li class="post">
+    <li v-for="post in posts" :key="post.id" class="post">
       <PostPreview
-        id="1"
         :edit="edit"
-        title="Заголовок 1"
-        description="Пример большого текста, которые не влезает в выделенную область. При этом в конец добавляется многоточие. Это все можно уидеть на приере данного блока. Приятного просмотра"
-      >
-      </PostPreview>
-    </li>
-    <li class="post">
-      <PostPreview
-        id="2"
-        :edit="edit"
-        title="Заголовок 2"
-        description="Описание 2"
+        :id="post.id"
+        :title="post.title"
+        :author="post.author"
+        :previewText="post.previewText"
       >
       </PostPreview>
     </li>
@@ -29,6 +21,10 @@
       edit: {
         type: Boolean,
         default: false
+      },
+      posts: {
+        type: Array,
+        required: true
       }
     },
 

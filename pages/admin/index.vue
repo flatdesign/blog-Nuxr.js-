@@ -16,7 +16,7 @@
     </div>
 
 
-    <PostList :edit="true"/>
+    <PostList :edit="true" :posts="getPosts" />
   </div>
 </template>
 
@@ -29,6 +29,11 @@
     methods: {
       checkoutNewPost() {
         this.$router.push('admin/newPost');
+      }
+    },
+    computed: {
+      getPosts() {
+        return this.$store.getters.loadedPosts;
       }
     }
   }

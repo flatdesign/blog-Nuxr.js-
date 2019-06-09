@@ -2,9 +2,9 @@
   <article class="post-preview" @click.prevent="checkoutPost">
     <div class="photo"></div>
     <div class="information">
-      <h2 class="post-title">{{ title }}</h2>
-      <div class="description">
-        <div>{{ description }}</div>
+      <h2 class="post-title">{{ title }} / {{ author }}</h2>
+      <div class="preview-text">
+        <div>{{ previewText }}</div>
       </div>
     </div>
   </article>
@@ -13,6 +13,10 @@
 <script>
   export default {
     props: {
+      edit: {
+        type: Boolean,
+        default: false
+      },
       id: {
         type: String,
         required: true
@@ -21,14 +25,14 @@
         type: String,
         required: true
       },
-      description: {
+      previewText: {
         type: String,
         required: true
       },
-      edit: {
-        type: Boolean,
-        default: false
-      }
+      author: {
+        type: String,
+        required: true
+      },
     },
     methods: {
       checkoutPost() {
@@ -70,26 +74,26 @@
       font-size: 24px;
     }
 
-    .description {
+    .preview-text {
       overflow: hidden;
       height: 50px;
       line-height: 25px;
     }
 
-    .description:before {
+    .preview-text:before {
       content: "";
       float: left;
       width: 5px;
       height: 50px;
     }
 
-    .description > *:first-child {
+    .preview-text > *:first-child {
       float: right;
       width: 100%;
       margin-left: -5px;
     }
 
-    .description:after {
+    .preview-text:after {
       content: "\02026";
       box-sizing: content-box;
       float: right;
