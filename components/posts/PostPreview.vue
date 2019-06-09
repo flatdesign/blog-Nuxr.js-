@@ -1,5 +1,5 @@
 <template>
-  <article class="post-preview" @click.prevent="checkoutPost">
+  <article class="post-preview">
     <div class="photo"></div>
     <div class="information">
       <h2 class="post-title">{{ title }} / {{ author }}</h2>
@@ -34,15 +34,7 @@
         required: true
       },
     },
-    methods: {
-      checkoutPost() {
-        if(this.edit) {
-          this.$router.push(`admin/editPost/${this.id}`);
-        } else {
-          this.$router.push(`posts/${this.id}`);
-        }
-      }
-    }
+    methods: {}
   }
 </script>
 

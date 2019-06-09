@@ -1,6 +1,11 @@
 <template>
   <ul class="posts-list">
-    <li v-for="post in posts" :key="post.id" class="post">
+    <li
+      class="post"
+      v-for="post in posts"
+      :key="post.id"
+      @click.prevent ="checkoutPost(post.id)"
+    >
       <PostPreview
         :edit="edit"
         :id="post.id"
@@ -27,10 +32,19 @@
         required: true
       }
     },
-
     components: {
       PostPreview
+    },
+    methods: {
+      checkoutPost(id) {
+        if(this.edit) {
+          this.$router.push(`admin/editPost/${id}`);
+        } else {
+          this.$router.push(`posts/${id}`);
+        }
+      }
     }
+
   }
 </script>
 
@@ -43,6 +57,7 @@
     flex-wrap: wrap;
     .post {
       margin-right: 15px;
+      margin-bottom: 15px;
       width: 600px;
       height: 450px;
     }

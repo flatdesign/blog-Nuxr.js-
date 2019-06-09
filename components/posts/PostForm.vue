@@ -2,12 +2,30 @@
   <form class="post-form">
     <v-text-field
       solo
+      label="Автор"
+      required
+      v-model="editedPost.author"
+      :error-messages="authorErrors"
+      @input="$v.editedPost.author.$touch()"
+      @blur="$v.editedPost.author.$touch()"
+    ></v-text-field>
+    <v-text-field
+      solo
       label="Название"
       required
       v-model="editedPost.title"
       :error-messages="titleErrors"
       @input="$v.editedPost.title.$touch()"
       @blur="$v.editedPost.title.$touch()"
+    ></v-text-field>
+    <v-text-field
+      solo
+      label="Текст на превью"
+      required
+      v-model="editedPost.previewText"
+      :error-messages="previewTextErrors"
+      @input="$v.editedPost.previewText.$touch()"
+      @blur="$v.editedPost.previewText.$touch()"
     ></v-text-field>
     <v-textarea
       solo
@@ -43,6 +61,8 @@
         editedPost: this.postParams ? {...this.postParams} : {
           title: '',
           description: '',
+          author: '',
+          previewText: ''
         }
       }
     },
@@ -60,7 +80,20 @@
         !this.$v.editedPost.description.minLength && errors.push('Описание не должно быть короче 50 символов');
         !this.$v.editedPost.description.required && errors.push('Описание не должно быть пустым');
         return errors;
-      }
+      },
+      authorErrors() {
+        const errors = [];
+        if (!this.$v.editedPost.description.$dirty) return errors;
+        !this.$v.editedPost.author.required && errors.push('Описание не должно быть пустым');
+        return errors;
+      },
+      previewTextErrors() {
+        const errors = [];
+        if (!this.$v.editedPost.description.$dirty) return errors;
+        !this.$v.editedPost.previewText.minLength && errors.push('Текст на превью не должен быть короче 10 символов');
+        !this.$v.editedPost.previewText.required && errors.push('Описание не должно быть пустым');
+        return errors;
+      },
     },
     methods: {
       submit() {
@@ -68,7 +101,7 @@
         if (this.$v.editedPost.$invalid) {
           alert("Проверьте правильность введенных данных");
         } else {
-          alert("Форма успешно отправлена");
+          this.$emit('submit', this.editedPost);
         }
       },
       clear() {
@@ -86,7 +119,14 @@
         description: {
           required,
           minLength: minLength(50)
-        }
+        },
+        author: {
+          required,
+        },
+        previewText: {
+          required,
+          minLength: minLength(10)
+        },
       }
     }
   }

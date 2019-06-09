@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <v-toolbar dark color="dark" height="50px">
-      <v-toolbar-side-icon></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click="showSideBar"></v-toolbar-side-icon>
 
       <v-toolbar-title class="white--text">
         <nuxt-link to="/" class="blog-name">Code Blog</nuxt-link>
@@ -57,7 +57,11 @@
         ]
       }
     },
-
+    methods: {
+      showSideBar() {
+        this.$store.commit('setSideBarStatus', true);
+      }
+    }
   }
 </script>
 

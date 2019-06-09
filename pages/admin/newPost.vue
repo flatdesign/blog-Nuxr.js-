@@ -1,7 +1,7 @@
 <template>
   <div class="new-post">
     <h1 class="new-post-title">Новый пост</h1>
-    <PostForm />
+    <PostForm @submit="formSubmit" />
   </div>
 </template>
 
@@ -11,6 +11,16 @@
   export default {
     components: {
       PostForm
+    },
+    methods: {
+      async formSubmit(post) {
+        try {
+          if(await this.$store.dispatch('addPost', post));
+            this.$router.push('/admin');
+        } catch(e) {
+          console.log(e);
+        }
+      }
     }
   }
 </script>

@@ -1,9 +1,10 @@
 <template>
  <v-navigation-drawer
-    v-model="drawer"
+    :value="getSideBarStatus"
     absolute
     temporary
     dark
+    @input="toggleSideBar"
   >
     <v-list>
       <v-list-tile
@@ -11,10 +12,6 @@
         :key="item.label"
         @click="item.action"
       >
-        <!-- <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-tile-action> -->
-
         <v-list-tile-content>
           <v-list-tile-title>{{ item.label }}</v-list-tile-title>
         </v-list-tile-content>
@@ -24,25 +21,36 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+
   export default {
     data() {
       return {
-        drawer: true,
         sideBarList: [
           {
             label: 'Главная',
-            action: function() {}
+            action: () => {this.$router.push('/')}
           },
           {
             label: 'Админ панель',
-            action: function() {}
+            action: () => {this.$router.push('/admin')}
           },
           {
             label: 'Об авторе',
-            action: function() {}
+            action: () => {this.$router.push('/about')}
           },
         ]
       }
+    },
+    methods: {
+      toggleSideBar(value) {
+        this.$store.commit('setSideBarStatus', value);
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'getSideBarStatus',
+      ])
     }
   }
 </script>
