@@ -2,7 +2,7 @@ import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
 import pkg from './package'
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
 
   /*
   ** Headers of the page
@@ -75,5 +75,9 @@ export default {
     */
     extend(config, ctx) {
     }
+  },
+
+  env: {
+    APIKey: 'AIzaSyDJhIIt33JZvLCxl9uI0F9mqRZ6mtKl3gc'
   }
 }
