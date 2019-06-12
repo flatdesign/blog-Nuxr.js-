@@ -44,15 +44,19 @@
          menuItems: [
           {
             label: 'Профиль',
-            action: function() {}
+            action: () => {}
           },
           {
             label: 'Сменить пароль',
-            action: function() {}
+            action: () => {}
           },
           {
             label: 'Выйти',
-            action: function() {}
+            action: () => {
+              localStorage.removeItem("idToken");
+              localStorage.removeItem("refreshToken");
+              this.$router.push("/");
+            }
           },
         ]
       }

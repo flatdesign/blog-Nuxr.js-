@@ -18,7 +18,9 @@
     methods: {
       async signUp({email, password}) {
         try {
-          const response = await this.$axios.post(`https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${process.env.APIKey}`, {'email': email, 'password': password, returnSecureToken: true});
+          const data = await this.$axios.$post(`https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${process.env.APIKey}`, {'email': email, 'password': password, returnSecureToken: true});
+          localStorage.setItem("idToken", data.idToken);
+          localStorage.setItem("refreshToken", data.refreshToken);
           this.$router.push("/");
         } catch (e) {
           alert("Ошибка регистрации");

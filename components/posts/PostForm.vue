@@ -39,6 +39,7 @@
     ></v-textarea>
     <v-btn @click="submit" large>Сохранить</v-btn>
     <v-btn @click="clear" large>Очистить</v-btn>
+    <v-btn @click="back" large>Отмена</v-btn>
   </form>
 </template>
 
@@ -84,7 +85,7 @@
       authorErrors() {
         const errors = [];
         if (!this.$v.editedPost.description.$dirty) return errors;
-        !this.$v.editedPost.author.required && errors.push('Описание не должно быть пустым');
+        !this.$v.editedPost.author.required && errors.push('Укажите автора');
         return errors;
       },
       previewTextErrors() {
@@ -108,6 +109,9 @@
         this.$v.editedPost.$reset();
         this.editedPosttitle = '';
         this.editedPostdescription = '';
+      },
+      back() {
+        this.$router.go(-1);
       }
     },
     validations: {
@@ -127,6 +131,11 @@
           required,
           minLength: minLength(10)
         },
+      }
+    },
+    watch: {
+      postParams(post) {
+        this.editedPost = post;
       }
     }
   }

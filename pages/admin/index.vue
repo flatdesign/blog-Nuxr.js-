@@ -15,7 +15,6 @@
       <v-btn large outline dark class="new-post" @click="checkoutNewPost">Создать новый</v-btn>
     </div>
 
-
     <PostList :edit="true" :posts="getPosts" />
   </div>
 </template>
@@ -23,18 +22,34 @@
 <script>
   import PostList from '@/components/posts/PostList';
   export default {
+    middleware: 'checkToken',
     components: {
       PostList
     },
     methods: {
       checkoutNewPost() {
         this.$router.push('admin/newPost');
-      }
+      },
+      async loadPosts() {
+        try {
+          const posts = [];
+          const data = await this.$axios.$get('https://nuxtblog-eabd2.firebaseio.com/posts.json');
+          for (const key in data) {
+            posts.push({...data[key], id: key});
+          }
+          this.$store.commit('setPosts', posts);
+        } catch(e) {
+          console.log(e);
+        }
+      },
     },
     computed: {
       getPosts() {
         return this.$store.getters.loadedPosts;
       }
+    },
+    created() {
+      this.loadPosts();
     }
   }
 </script>

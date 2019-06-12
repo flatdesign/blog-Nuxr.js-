@@ -15,6 +15,7 @@
   import SideBar from "@/components/mainPage/SideBar";
 
   export default {
+    transition: 'page',
     components: {
       Header,
       SideBar

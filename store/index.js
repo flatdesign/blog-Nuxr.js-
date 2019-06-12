@@ -34,38 +34,15 @@ const createStore = () => {
       }
     },
     actions: {
-      async nuxtServerInit(vuexContext, nuxtContext) {
+      async refreshToken(context, payload) {
         try {
-          const posts = [];
-          const data = await this.$axios.$get('https://nuxtblog-eabd2.firebaseio.com/posts.json');
-          for (const key in data) {
-            posts.push({...data[key], id: key});
-          }
-          vuexContext.commit('setPosts', posts);
+          const data = await this.$axios.$post(`https://securetoken.googleapis.com/v1/token?key=${payload.key}`, {grant_type: "refresh_token", refresh_token: payload.token});
+          return {idToken: data["id_token"], idRefreshToken: data["refresh_token"]}
         } catch(e) {
           console.log(e);
         }
-      },
-      async addPost(vuexContext, post) {
-        try {
-          const data = await this.$axios.$post('https://nuxtblog-eabd2.firebaseio.com/posts.json', post);
-          vuexContext.commit('addPost', {...post, id: data.name});
-          return true;
-        } catch(e) {
-          console.log(e);
-        }
-      },
-      async editPost(vuexContext, {post, postId}) {
-        try {
-          const data = await this.$axios.put(`https://nuxtblog-eabd2.firebaseio.com/posts/${postId}.json`, post);
 
-          vuexContext.commit('editPost', {...post, id: postId});
-          return true;
-        } catch(e) {
-          console.log(e);
-        }
-      },
-
+      }
     }
   })
 }
