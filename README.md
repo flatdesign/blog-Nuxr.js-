@@ -1,6 +1,4 @@
-# blog
-
-> My fantabulous Nuxt.js project
+# Bookmarks app
 
 ## Build Setup
 
