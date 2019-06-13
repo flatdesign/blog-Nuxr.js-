@@ -21,7 +21,7 @@
           const data = await this.$axios.$post(`https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${process.env.APIKey}`, {'email': email, 'password': password, returnSecureToken: true});
           localStorage.setItem("idToken", data.idToken);
           localStorage.setItem("refreshToken", data.refreshToken);
-          this.$router.push("/");
+          this.$router.push("/profile");
         } catch (e) {
           alert("Ошибка регистрации");
           console.log(e);

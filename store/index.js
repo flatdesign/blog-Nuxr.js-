@@ -4,11 +4,11 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       sideBarStatus: false,
-      loadedPosts: []
+      bookmarks: []
     },
     getters: {
-      loadedPosts(state) {
-        return state.loadedPosts;
+      getBookmarks(state) {
+        return state.bookmarks;
       },
       getSideBarStatus(state) {
         return state.sideBarStatus;
@@ -18,20 +18,28 @@ const createStore = () => {
       setSideBarStatus(state, status) {
         state.sideBarStatus = status;
       },
-      setPosts(state, posts) {
-        state.loadedPosts = posts;
+      setBookmarks(state, bookmarks) {
+        state.bookmarks = bookmarks;
       },
-      addPost(state, newPost) {
-        state.loadedPosts.push(newPost);
+      addBookmark(state, bookmark) {
+        state.bookmarks.push(bookmark);
       },
-      editPost(state, editedPost) {
-        for(let i = 0; i < state.loadedPosts.length; i++) {
-          if(state.loadedPosts[i].id === editedPost.id) {
-            state.loadedPosts[i] = editedPost;
+      editBookmark(state, bookmark) {
+        for(let i = 0; i < state.bookmarks.length; i++) {
+          if(state.bookmarks[i].id === bookmark.id) {
+            state.bookmarks[i] = bookmark;
             return;
           }
         }
-      }
+      },
+      deleteBookmark(state, id) {
+        for(let i = 0; i < state.bookmarks.length; i++) {
+          if(state.bookmarks[i].id === id) {
+            state.bookmarks.splice(i, 1);
+            return;
+          }
+        }
+      },
     },
     actions: {
       async refreshToken(context, payload) {

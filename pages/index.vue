@@ -1,7 +1,7 @@
 <template>
   <div class="main-page">
     <h1>Добро пожаловать, пользователь!</h1>
-    <nuxt-link to="posts">Все посты</nuxt-link>
+    <nuxt-link to="bookmarks">Перейти к закладкам</nuxt-link>
   </div>
 </template>
 

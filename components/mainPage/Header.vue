@@ -4,7 +4,7 @@
       <v-toolbar-side-icon @click="showSideBar"></v-toolbar-side-icon>
 
       <v-toolbar-title class="white--text">
-        <nuxt-link to="/" class="blog-name">Code Blog</nuxt-link>
+        <nuxt-link to="/" class="blog-name">Bookmarks</nuxt-link>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>

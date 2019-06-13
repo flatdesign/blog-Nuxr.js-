@@ -1,22 +1,22 @@
 <template>
-  <div class="edit-post">
-    <h1 class="new-post-title">Редактировние поста</h1>
-    <PostForm :postParams="post" @submit="formSubmit"/>
+  <div class="edit-bookmark">
+    <h1 class="new-bookmark-title">Редактировние поста</h1>
+    <BookmarkForm :params="bookmark" @submit="formSubmit"/>
   </div>
 </template>
 
 <script>
-  import PostForm from "@/components/posts/PostForm";
+  import BookmarkForm from "@/components/bookmarks/BookmarkForm";
 
   export default {
     data() {
       return {
-        post: null
+        bookmark: null
       }
     },
     middleware: 'checkToken',
     components: {
-      PostForm
+      BookmarkForm
     },
     computed: {
       getId() {
@@ -26,17 +26,17 @@
     methods: {
       async loadPost() {
         try {
-          const post = await this.$axios.$get(`https://nuxtblog-eabd2.firebaseio.com/posts/${this.getId}.json`);
-          this.post = post;
+          const bookmark = await this.$axios.$get(`https://nuxtblog-eabd2.firebaseio.com/bookmarks/${this.getId}.json`);
+          this.bookmark = bookmark;
         } catch(e) {
           console.log(e);
         }
       },
-      async formSubmit(post) {
+      async formSubmit(bookmark) {
         try {
-          const data = await this.$axios.put(`https://nuxtblog-eabd2.firebaseio.com/posts/${this.getId}.json?auth=${localStorage.getItem("idToken")}`, post);
-          this.$store.commit('editPost', {...post, id: this.getId});
-          this.$router.push('/admin');
+          const data = await this.$axios.put(`https://nuxtblog-eabd2.firebaseio.com/bookmarks/${this.getId}.json?auth=${localStorage.getItem("idToken")}`, bookmark);
+          this.$store.commit('editBookmark', {...bookmark, id: this.getId});
+          this.$router.push('/profile');
         } catch(e) {
           const refreshData = await this.$store.dispatch('refreshToken',{key: process.env.APIKey, token: localStorage.getItem("refreshToken")});
           localStorage.setItem("idToken", refreshData.idToken);
@@ -52,10 +52,10 @@
 </script>
 
 <style lang="scss" scoped>
-  div.edit-post {
-    width: 900px;
+  div.edit-bookmark {
+    width: 100%;
     margin: 0 auto;
-    .new-post-title {
+    .new-bookmark-title {
       margin-bottom: 20px;
     }
   }

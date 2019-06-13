@@ -36,8 +36,8 @@
             route: '/'
           },
           {
-            label: 'Админ панель',
-            route: '/admin'
+            label: 'Управление закладками',
+            route: '/profile'
           },
           {
             label: 'Об авторе',

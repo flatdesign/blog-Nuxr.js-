@@ -1,24 +1,24 @@
 <template>
-  <div class="new-post">
-    <h1 class="new-post-title">Новый пост</h1>
-    <PostForm @submit="formSubmit" />
+  <div class="new-bookmark">
+    <h1 class="new-bookmark-title">Новый пост</h1>
+    <BookmarkForm @submit="formSubmit" />
   </div>
 </template>
 
 <script>
-  import PostForm from "@/components/posts/PostForm";
+  import BookmarkForm from "@/components/bookmarks/BookmarkForm";
 
   export default {
     middleware: 'checkToken',
     components: {
-      PostForm
+      BookmarkForm
     },
     methods: {
-      async formSubmit(post) {
+      async formSubmit(bookmark) {
         try {
-          const data = await this.$axios.$post(`https://nuxtblog-eabd2.firebaseio.com/posts.json?auth=${localStorage.getItem("idToken")}`, post);
-          this.$store.commit('addPost', {...post, id: data.name});
-          this.$router.push('/admin');
+          const data = await this.$axios.$post(`https://nuxtblog-eabd2.firebaseio.com/bookmarks.json?auth=${localStorage.getItem("idToken")}`, bookmark);
+          this.$store.commit('addBookmark', {...bookmark, id: data.name});
+          this.$router.push('/profile');
         } catch(e) {
           console.log(e);
           const refreshData = await this.$store.dispatch('refreshToken',{key: process.env.APIKey, token: localStorage.getItem("refreshToken")});
@@ -32,10 +32,10 @@
 </script>
 
 <style lang="scss" scoped>
-  div.new-post {
+  div.new-bookmark {
     width: 900px;
     margin: 0 auto;
-    .new-post-title {
+    .new-bookmark-title {
       margin-bottom: 20px;
     }
   }

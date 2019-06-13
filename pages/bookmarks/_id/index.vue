@@ -1,8 +1,7 @@
 <template>
-  <div class="post-wrapper">
-    <section class="post">
+  <div class="bookmark-wrapper">
+    <section class="bookmark">
       <h1>{{title}}</h1>
-      <p>Автор - {{author}}</p>
       <div>{{description}}</div>
     </section>
   </div>
@@ -12,7 +11,6 @@
   export default {
     data() {
       return {
-        author: '',
         title: '',
         description: ''
       }
@@ -23,19 +21,18 @@
       }
     },
     methods: {
-      async loadPost() {
+      async loadbookmark() {
         try {
-          const post = await this.$axios.$get(`https://nuxtblog-eabd2.firebaseio.com/posts/${this.getId}.json`);
-          this.author = post.author;
-          this.title = post.title;
-          this.description = post.description;
+          const bookmark = await this.$axios.$get(`https://nuxtblog-eabd2.firebaseio.com/bookmarks/${this.getId}.json`);
+          this.title = bookmark.title;
+          this.description = bookmark.description;
         } catch(e) {
           console.log(e);
         }
       }
     },
     created() {
-      this.loadPost();
+      this.loadbookmark();
     }
   }
 </script>

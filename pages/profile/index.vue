@@ -1,8 +1,8 @@
 <template>
-  <div class="admin-wrapper">
+  <div class="profile-wrapper">
     <div class="controls">
       <div class="search-wrapper">
-        <label class="search-title"><span>Редатировать пост</span>
+        <label class="search-title"><span>Найти закладку</span>
           <v-text-field
             class="search-input"
             solo
@@ -12,51 +12,51 @@
           ></v-text-field>
         </label>
       </div>
-      <v-btn large outline dark class="new-post" @click="checkoutNewPost">Создать новый</v-btn>
+      <v-btn large outline dark class="new-post" @click="checkoutNewPost">Создать новую</v-btn>
     </div>
 
-    <PostList :edit="true" :posts="getPosts" />
+    <BookmarkList :edit="true" :bookmarks="getBookmarks" />
   </div>
 </template>
 
 <script>
-  import PostList from '@/components/posts/PostList';
+  import BookmarkList from '@/components/bookmarks/BookmarkList';
   export default {
     middleware: 'checkToken',
     components: {
-      PostList
+      BookmarkList
     },
     methods: {
       checkoutNewPost() {
-        this.$router.push('admin/newPost');
+        this.$router.push('profile/newBookmark');
       },
-      async loadPosts() {
+      async loadBookmarks() {
         try {
           const posts = [];
-          const data = await this.$axios.$get('https://nuxtblog-eabd2.firebaseio.com/posts.json');
+          const data = await this.$axios.$get('https://nuxtblog-eabd2.firebaseio.com/bookmarks.json');
           for (const key in data) {
             posts.push({...data[key], id: key});
           }
-          this.$store.commit('setPosts', posts);
+          this.$store.commit('setBookmarks', posts);
         } catch(e) {
           console.log(e);
         }
       },
     },
     computed: {
-      getPosts() {
-        return this.$store.getters.loadedPosts;
+      getBookmarks() {
+        return this.$store.getters.getBookmarks;
       }
     },
     created() {
-      this.loadPosts();
+      this.loadBookmarks();
     }
   }
 </script>
 
 
 <style lang="scss" scoped>
-  div.admin-wrapper {
+  div.profile-wrapper {
     .controls {
       display: flex;
       align-items: flex-end;
