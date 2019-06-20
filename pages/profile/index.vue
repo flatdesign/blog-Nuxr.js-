@@ -6,9 +6,10 @@
           <v-text-field
             class="search-input"
             solo
-            label="Название"
+            label="Название или описание"
             clearable
             append-icon="search"
+            v-model="search"
           ></v-text-field>
         </label>
       </div>
@@ -21,12 +22,33 @@
 
 <script>
   import BookmarkList from '@/components/bookmarks/BookmarkList';
+  import {mapGetters, mapMutations} from 'vuex';
+
   export default {
     middleware: 'checkToken',
     components: {
       BookmarkList
     },
+    data() {
+      return {
+        search: ''
+      }
+    },
+    computed: {
+      ...mapGetters({
+        bookmarks: 'bookmarks/getBookmarks'
+      }),
+      getBookmarks() {
+        return this.bookmarks.filter(el => {
+          return el.title.toLowerCase().indexOf(this.search.trim().toLowerCase()) !== -1 || el.description.toLowerCase().indexOf(this.search.trim().toLowerCase()) !== -1;
+        });
+      },
+
+    },
     methods: {
+      ...mapMutations({
+        setBookmarks: 'bookmarks/setBookmarks'
+      }),
       checkoutNewPost() {
         this.$router.push('profile/newBookmark');
       },
@@ -37,17 +59,13 @@
           for (const key in data) {
             posts.push({...data[key], id: key});
           }
-          this.$store.commit('setBookmarks', posts);
+          this.setBookmarks(posts);
         } catch(e) {
           console.log(e);
         }
       },
     },
-    computed: {
-      getBookmarks() {
-        return this.$store.getters.getBookmarks;
-      }
-    },
+    
     created() {
       this.loadBookmarks();
     }

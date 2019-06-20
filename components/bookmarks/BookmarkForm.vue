@@ -1,51 +1,82 @@
 <template>
-  <form class="bookmark-form">
-    <label>
-      Название закладки
-      <v-text-field
-        solo
-        label="Название закладки"
-        required
-        v-model="bookmark.title"
-        :error-messages="titleErrors"
-        @input="$v.bookmark.title.$touch()"
-        @blur="$v.bookmark.title.$touch()"
-      ></v-text-field>
-    </label>
-    <label>
-      Ссылка на источник
-      <v-text-field
-        solo
-        label="Ссылка на источник"
-        required
-        v-model="bookmark.link"
-        :error-messages="linkErrors"
-        @input="$v.bookmark.link.$touch()"
-        @blur="$v.bookmark.link.$touch()"
-      ></v-text-field>
-    </label>
-    <v-textarea
-      solo
-      label="Описание"
-      required
-      name="postText"
-      v-model="bookmark.description"
-      :error-messages="descriptionErrors"
-      @input="$v.bookmark.description.$touch()"
-      @blur="$v.bookmark.description.$touch()"
-    ></v-textarea>
-    <v-btn @click="submit" large>Сохранить</v-btn>
-    <v-btn @click="back" large>Отмена</v-btn>
-  </form>
+  <div class="bookmark-form-wrapper">
+    <BookmarkPreview
+      :editable="false"
+      :title="bookmark.title"
+      :link="bookmark.link"
+      :description="bookmark.description">
+    </BookmarkPreview>
+    <form class="bookmark-form">
+      <label>
+        <span>Название закладки: </span>
+        <v-text-field
+          solo
+          label="Название закладки"
+          required
+          v-model="bookmark.title"
+          :error-messages="titleErrors"
+          @input="$v.bookmark.title.$touch()"
+          @blur="$v.bookmark.title.$touch()"
+        ></v-text-field>
+      </label>
+      <label>
+        <span>Ссылка на источник: </span> 
+        <v-text-field
+          solo
+          label="Ссылка на источник"
+          required
+          v-model="bookmark.link"
+          :error-messages="linkErrors"
+          @input="$v.bookmark.link.$touch()"
+          @blur="$v.bookmark.link.$touch()"
+        ></v-text-field>
+      </label>
+      <label>
+        <span>Описание: </span>
+        <v-textarea
+          solo
+          label="Описание"
+          required
+          name="postText"
+          height="150"
+          v-model="bookmark.description"
+          :error-messages="descriptionErrors"
+          @input="$v.bookmark.description.$touch()"
+          @blur="$v.bookmark.description.$touch()"
+        ></v-textarea>
+      </label>
+      <label>
+        <span>Теги: 
+          <v-autocomplete
+            v-model="bookmark.tags"
+            :items="getTags"
+            chips
+            solo
+            item-text="text"
+            item-value="text"
+            multiple
+          >
+          </v-autocomplete>
+        </span>
+      </label>
+      <v-btn @click="submit" large>Сохранить</v-btn>
+      <v-btn @click="back" large>Отмена</v-btn>
+    </form>
+  </div>
 </template>
 
 <script>
   import { validationMixin } from 'vuelidate';
   import { required, minLength } from 'vuelidate/lib/validators';
+  import { mapGetters } from 'vuex';
+  import BookmarkPreview from '@/components/bookmarks/BookmarkPreview';
 
 
   export default {
     mixins: ['validationMixin'],
+    components: {
+      BookmarkPreview
+    },
     props: {
       params: {
         type: Object,
@@ -57,12 +88,16 @@
       return {
         bookmark: this.params ? {...this.params} : {
           title: '',
-          lenk: '',
-          description: ''
+          link: '',
+          description: '',
+          tags: []
         }
       }
     },
     computed: {
+      ...mapGetters({
+        getTags: 'tags/getTags'
+      }),
       titleErrors() {
         const errors = [];
         if (!this.$v.bookmark.title.$dirty) return errors;
@@ -121,8 +156,18 @@
 </script>
 
 <style lang="scss" scoped>
-  form.bookmark {
-
+  form.bookmark-form {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    label {
+      span {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    }
   }
 </style>
 

@@ -33,8 +33,6 @@
 
 <style lang="scss" scoped>
   div.new-bookmark {
-    width: 900px;
-    margin: 0 auto;
     .new-bookmark-title {
       margin-bottom: 20px;
     }

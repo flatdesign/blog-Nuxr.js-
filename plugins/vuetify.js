@@ -17,7 +17,8 @@ import Vuetify, {
   VListTileContent,
   VNavigationDrawer,
   VTextField,
-  VTextArea
+  VTextArea,
+  VAutocomplete
 
 
 } from 'vuetify/lib'
@@ -51,6 +52,7 @@ Vue.use(Vuetify, {
     VListTileContent,
     VNavigationDrawer,
     VTextField,
-    VTextArea
+    VTextArea,
+    VAutocomplete
   }
 })

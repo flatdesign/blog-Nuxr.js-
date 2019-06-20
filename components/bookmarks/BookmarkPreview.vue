@@ -5,18 +5,37 @@
     target="_blank"
   >
     <article class="bookmark-preview">
-      <h2 class="title">{{ title }}</h2>
+      <div class="bookmark-controls">
+        <h2 class="bookmark-title">{{ title }}</h2>
+        <div class="buttons" v-if="editable">
+          <v-btn class="edit-button" flat icon color="white"  @click.prevent="checkoutBookmark">
+            <v-icon>edit</v-icon>
+          </v-btn>
+          <v-btn class="delete-button" flat icon color="white"  @click.prevent="deleteBookmark">
+            <v-icon>delete</v-icon>
+          </v-btn>
+        </div>
+      </div>
+      
       <div class="description">
-        <div>{{ description }}</div>
+        <p>{{ description }}</p>
       </div>
-      <div class="buttons">
-        <v-btn class="edit-button" flat icon color="white"  @click.prevent="checkoutBookmark">
-          <v-icon>edit</v-icon>
-        </v-btn>
-        <v-btn class="delete-button" flat icon color="white"  @click.prevent="deleteBookmark">
-          <v-icon>delete</v-icon>
-        </v-btn>
-      </div>
+
+      <ul class="tags">
+        <li>
+          <v-btn outline small>JavaScript</v-btn>
+        </li>
+        <li>
+          <v-btn outline small>Фронтенд</v-btn>
+        </li>
+        <li>
+          <v-btn outline small>Новости</v-btn>
+        </li>
+        <li>
+          <v-btn outline small>Конференции</v-btn>
+        </li>
+      </ul>
+      
 
     </article>
   </a>
@@ -27,7 +46,7 @@
     props: {
       id: {
         type: String,
-        required: true
+        required: false
       },
       title: {
         type: String,
@@ -41,6 +60,10 @@
         type: String,
         required: true
       },
+      editable: {
+        type: Boolean,
+        default: true
+      }
     },
     methods: {
       checkoutBookmark() {
@@ -70,14 +93,16 @@
       outline: none;
       box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);
     }
+    .bookmark-controls {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 10px;
+    }
     .bookmark-preview {
-      position: relative;
       padding: 20px 40px;
     }
     .buttons {
-      position: absolute;
-      top: 12px;
-      right: 10px;
+      margin-left: auto;
       .edit-button,
       .delete-button {
         margin: 0;
@@ -89,23 +114,28 @@
       }
     }
 
-    .title {
+    .bookmark-title {
+      max-width: 700px;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
-      margin-bottom: 5px;
-      font-size: 24px;
+      font-size: 25px;
     }
     .description {
       overflow: hidden;
-      height: 50px;
-      line-height: 25px;
+      height: 60px;
+      margin-bottom: 20px;
+      p {
+        margin-bottom: 0;
+        font-size: 16px;
+        line-height: 20px;
+      }
     }
     .description:before {
       content: "";
       float: left;
       width: 5px;
-      height: 50px;
+      height: 65px;
     }
     .description > *:first-child {
       float: right;
@@ -123,6 +153,19 @@
       margin-left: -3em;
       padding-right: 5px;
       text-align: right;
+    }
+    .tags {
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      li {
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+      button {
+        margin: 0;
+      }
     }
   }
 </style>
